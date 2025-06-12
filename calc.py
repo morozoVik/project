@@ -1,13 +1,16 @@
-def add(x, y):
-    return x + y
+def add(a, b):
+    return a + b
 
-def subtract(x, y):
-    return x - y
 
-def multiply(x, y):
-    return x * y
+def subtract(a, b):
+    return a - b
 
-def divide(x, y):
-    if y == 0:
-        raise ZeroDivisionError('Деление на ноль невозможно')
-    return x / y
+
+def multiply(a, b):
+    return a * b
+
+
+def divide(a, b):
+    if b == 0:
+        raise ZeroDivisionError("division by zero")
+    return a / b

@@ -10,7 +10,9 @@ def mask_account_card(account_info: str) -> str:
     else:
         # Маскируем карту
         card_number = parts[-1]
-        masked_number = f"{card_number[:4]} {card_number[4:6]}** **** {card_number[-4:]}"
+        masked_number = (
+            f"{card_number[:4]} {card_number[4:6]}** **** {card_number[-4:]}"
+        )
         return " ".join(parts[:-1] + [masked_number])
 
 
