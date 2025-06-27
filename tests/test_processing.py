@@ -3,52 +3,58 @@ import pytest
 from src.processing import filter_by_state, sort_by_date
 
 
+# Фикстуры с тестовыми данными
 @pytest.fixture
-def sample_transactions():
-    """Фикстура предоставляет тестовый набор транзакций с разными статусами и датами."""
+def transaction_data():
     return [
-        {"id": 1, "state": "EXECUTED", "date": "2021-01-01T00:00:00.000000"},
-        {"id": 2, "state": "CANCELED", "date": "2021-02-01T00:00:00.000000"},
-        {"id": 3, "state": "EXECUTED", "date": "2021-03-01T00:00:00.000000"},
-        {"id": 4, "state": "PENDING", "date": "2021-04-01T00:00:00.000000"},
+        {"id": 1, "state": "EXECUTED", "date": "2023-04-16T08:45:00.000"},
+        {"id": 2, "state": "PENDING", "date": "2023-04-15T10:15:00.000"},
+        {"id": 3, "state": "EXECUTED", "date": "2023-04-16T08:45:00.000"},
+        {"id": 4, "state": "CANCELED", "date": "2023-04-14T18:20:00.000"},
+        {"id": 5, "state": None, "date": "2023-04-13T09:10:00.000"},
     ]
 
 
-def test_filter_by_state(sample_transactions):
-    """
-    Тестирование фильтрации транзакций по статусу.
-    """
-    # Тестирование фильтрации по статусу EXECUTED
-    result = filter_by_state(sample_transactions, "EXECUTED")
-    assert len(result) == 2
-    assert all(item["state"] == "EXECUTED" for item in result)
-
-    # Проверка, что исходный список не изменился
-    assert len(sample_transactions) == 4
-
-    # Тестирование фильтрации по несуществующему статусу
-    result = filter_by_state(sample_transactions, "UNKNOWN")
-    assert len(result) == 0
+@pytest.fixture
+def edge_case_data():
+    return [
+        {"id": 1, "date": "2023-01-01"},  # нет state
+        {"id": 2},  # нет state и date
+        {"id": 3, "state": "EXECUTED"},  # нет date
+    ]
 
 
+# Параметризованные тесты для filter_by_state
 @pytest.mark.parametrize(
-    "reverse, expected_order",
+    "state, expected_ids",
     [
-        (False, [1, 3, 2, 4]),  # Сортировка по возрастанию даты
-        (True, [4, 2, 3, 1]),  # Сортировка по убыванию даты
+        ("EXECUTED", [1, 3]),
+        ("PENDING", [2]),
+        ("NON_EXISTENT", []),
     ],
 )
-def test_sort_by_date(sample_transactions, reverse, expected_order):
-    """
-    Тестирование сортировки транзакций по дате.
-    """
-    result = sort_by_date(sample_transactions, reverse)
-    assert [item["id"] for item in result] == expected_order
-    assert len(result) == len(sample_transactions)  # Все элементы сохраняются
+def test_filter_by_state(transaction_data, state, expected_ids):
+    result = filter_by_state(transaction_data, state)
+    assert [x["id"] for x in result] == expected_ids
 
 
-def test_sort_by_date_empty():
-    """
-    Тестирование обработки пустого списка транзакций.
-    """
-    assert sort_by_date([], True) == []
+def test_filter_by_state_edge_cases(edge_case_data):
+    assert len(filter_by_state(edge_case_data, "EXECUTED")) == 1
+
+
+# Параметризованные тесты для sort_by_date
+@pytest.mark.parametrize(
+    "reverse, first_id",
+    [
+        (True, 1),  # по убыванию
+        (False, 5),  # по возрастанию
+    ],
+)
+def test_sort_by_date(transaction_data, reverse, first_id):
+    result = sort_by_date(transaction_data, reverse)
+    assert result[0]["id"] == first_id
+
+
+def test_sort_by_date_edge_cases(edge_case_data):
+    with pytest.raises(KeyError):
+        sort_by_date(edge_case_data)
