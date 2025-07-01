@@ -1,6 +1,6 @@
+import sys
 from datetime import datetime
 from functools import wraps
-import sys
 
 
 def log(filename=None):

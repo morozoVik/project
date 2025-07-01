@@ -1,7 +1,9 @@
 import os
 from datetime import datetime
-from src.decorators import log
+
 import pytest
+
+from src.decorators import log
 
 
 # Тестовая функция для проверки успешного выполнения
@@ -99,7 +101,7 @@ def test_log_with_no_filename_uses_console(capsys):
 
     @log()
     def console_func(x):
-        return x ** 2
+        return x**2
 
     console_func(3)
     captured = capsys.readouterr()
