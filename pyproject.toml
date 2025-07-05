@@ -1,16 +1,24 @@
-[project]
+[tool.poetry]
 name = "project"
 version = "0.1.0"
 description = "1"
-authors = [
-    {name = "Ilya Morozov", email = "ulb9@mail.ru"}
-]
+authors = ["Ilya Morozov <ulb9@mail.ru>"]
 readme = "README.md"
-requires-python = ">=3.13"
-dependencies = [
-    "requests"
-]
+packages = [{include = "project", from = "src"}]
+
+[tool.poetry.dependencies]
+python = ">=3.13"
+requests = "^2.32.4"
+dotenv = "^0.9.9"
+python-dotenv = "^1.1.1"
+
+[tool.poetry.group.dev.dependencies]
+types-requests = "^2.32.4.20250611"
+python-dotenv = "^1.1.1"
+pytest = "^8.4.1"
+pytest-cov = "^6.2.1"
+pytest-mock = "^3.14.1"
 
 [build-system]
-requires = ["setuptools>=42"]
-build-backend = "setuptools.build_meta"
+requires = ["poetry-core>=2.0.0"]
+build-backend = "poetry.core.masonry.api"

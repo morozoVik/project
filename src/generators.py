@@ -1,4 +1,7 @@
-def filter_by_currency(transactions: list[dict], currency: str) -> iter:
+from typing import Iterator
+
+
+def filter_by_currency(transactions: list[dict], currency: str) -> Iterator:
     """
     Фильтрует транзакции по заданной валюте и возвращает итератор.
     """
