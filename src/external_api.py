@@ -45,11 +45,7 @@ def convert_to_rub(transaction: Dict) -> float:
     # Конвертируем через API
     try:
         url = f"https://api.apilayer.com/exchangerates_data/convert?to=RUB&from={currency_code}&amount={amount}"
-        response = requests.get(
-            url,
-            headers={"apikey": api_key},
-            timeout=10
-        )
+        response = requests.get(url, headers={"apikey": api_key}, timeout=10)
         response.raise_for_status()
         result = response.json()
         return round(float(result["result"]), 2)
