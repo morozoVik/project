@@ -48,3 +48,26 @@ def get_transactions(file_path: str) -> List[Dict]:
     except Exception as e:
         logger.exception(f"Неожиданная ошибка при загрузке транзакций: {str(e)}")
         return []
+
+
+def filter_by_status(data: List[Dict], status: str) -> List[Dict]:
+    """
+    Фильтрует транзакции по статусу.
+    """
+    if not status:
+        return data
+    return [t for t in data if t.get("status", "").lower() == status.lower()]
+
+
+def sort_transactions(data: List[Dict], reverse: bool = False) -> List[Dict]:
+    """
+    Сортирует транзакции по дате.
+    """
+    return sorted(data, key=lambda x: x.get("date", ""), reverse=reverse)
+
+
+def filter_rub_only(data: List[Dict]) -> List[Dict]:
+    """
+    Фильтрует транзакции, оставляя только рублевые.
+    """
+    return [t for t in data if t.get("currency", "").lower() == "rub"]
