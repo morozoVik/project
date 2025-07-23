@@ -56,7 +56,7 @@ def filter_by_status(data: List[Dict], status: str) -> List[Dict]:
     """
     if not status:
         return data
-    return [t for t in data if t.get("status", "").lower() == status.lower()]
+    return [t for t in data if t.get("state", "").upper() == status.upper()]
 
 
 def sort_transactions(data: List[Dict], reverse: bool = False) -> List[Dict]:

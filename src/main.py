@@ -80,7 +80,7 @@ def get_file_path(choice: str) -> str:
     data_dir.mkdir(exist_ok=True)
 
     if choice == "1":
-        return str(data_dir / "transactions.json")
+        return str(data_dir / "operations.json")
     elif choice == "2":
         return str(data_dir / "transactions.csv")
     elif choice == "3":
