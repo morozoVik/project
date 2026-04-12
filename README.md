@@ -125,6 +125,24 @@ def example_file(x, y):
 
   - JSON не является списком
 
+
+# Чтение транзакций из CSV и Excel файлов
+
+Проект теперь поддерживает чтение транзакций из:
+- CSV файлов (используйте `read_csv_transactions()`)
+- Excel файлов (используйте `read_excel_transactions()`)
+
+Функции возвращают список словарей, где каждый словарь представляет одну транзакцию.
+
+Пример использования:
+
+```
+from src.file_reader import read_csv_transactions, read_excel_transactions
+
+csv_data = read_csv_transactions("data/transactions.csv")
+excel_data = read_excel_transactions("data/transactions.xlsx")
+```
+
 # Тестирование проекта
 
 Проект включает комплексные тесты для проверки основных модулей:
