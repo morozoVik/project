@@ -57,3 +57,8 @@ exclude = 'venv'
 [tool.isort]
 # максимальная длина строки
 line_length = 119
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "test_*.py"
+python_functions = "test_*"
