@@ -142,6 +142,17 @@ from src.file_reader import read_csv_transactions, read_excel_transactions
 csv_data = read_csv_transactions("data/transactions.csv")
 excel_data = read_excel_transactions("data/transactions.xlsx")
 ```
+# Банковские транзакции
+
+Проект предоставляет функциональность для работы с банковскими транзакциями:
+- Загрузка данных из JSON, CSV, XLSX.
+- Фильтрация по статусу, валюте, ключевому слову.
+- Подсчет операций по категориям.
+- Сортировка по дате.
+
+## Новая функциональность
+- Реализован поиск по описанию транзакций с использованием регулярных выражений (`re`).
+- Добавлен подсчет операций по категориям с помощью `collections.Counter`.
 
 # Тестирование проекта
 
